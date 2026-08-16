@@ -59,6 +59,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="$(date -u +'%Y%m%d-%H%M%S')"
+          git remote set-url origin https://github.com/lewhfree/knightos-builder.git
           gh release create "$TAG" \
           --title "KnightOS $TAG" \
           --notes "Automated build of KnightOS upstream" \
