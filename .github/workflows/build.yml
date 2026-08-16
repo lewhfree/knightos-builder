@@ -9,6 +9,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+          build-essential \
+          cmake \
+          libboost-all-dev \
+          mono-devel \
+          bison \
+          flex \
+          asciidoc \
+          git \
+          python3 \
+          python-is-python3 \
+          python3-pip \
+          python3-docopt \
+          python3-requests \
+          python3-pystache \
+          python3-yaml \
+          scdoc
       - name: Install SDK
         run: |
           git clone https://github.com/lewhfree/knightos-install-sdk-script sdk
@@ -17,11 +37,35 @@ jobs:
       - name: Clone KnightOS
         run: |
           git clone https://github.com/KnightOS/KnightOS
-      - name: Init KOS
+      - name: Build all KOS targets
         working-directory: KnightOS
         run: |
-          knightos init
-      - name: Build
-        working-directory: KnightOS
-        run: |
+          knightos init --platform=TI73
           make upgrade
+          knightos init --platform=TI83p
+          make upgrade
+          knightos init --platform=TI83pSE
+          make upgrade
+          knightos init --platform=TI84p
+          make upgrade
+          knightos init --platform=TI84pSE
+          make upgrade
+          knightos init --platform=TI84pCSE
+          make upgrade
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: KnightOS builds
+          path: |
+            KnightOS/bin/KnightOS-TI73.73u
+            KnightOS/bin/KnightOS-TI73.rom
+            KnightOS/bin/KnightOS-TI83p.8xu
+            KnightOS/bin/KnightOS-TI83p.rom
+            KnightOS/bin/KnightOS-TI83pSE.8xu
+            KnightOS/bin/KnightOS-TI83pSE.rom
+            KnightOS/bin/KnightOS-TI84p.8xu
+            KnightOS/bin/KnightOS-TI84p.rom
+            KnightOS/bin/KnightOS-TI84pCSE.8cu
+            KnightOS/bin/KnightOS-TI84pCSE.rom
+            KnightOS/bin/KnightOS-TI84pSE.8xu
+            KnightOS/bin/KnightOS-TI84pSE.rom
