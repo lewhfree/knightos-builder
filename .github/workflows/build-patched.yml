@@ -45,7 +45,7 @@ jobs:
       - name: Checkout Patches
         uses: actions/checkout@v4
       - name: Apply Patches
-        working-dir: kernel
+        working-directory: kernel
         run: |
           git apply ../patches/*.patch
       - name: Build all KOS targets
