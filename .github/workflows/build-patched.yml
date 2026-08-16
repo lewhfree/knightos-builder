@@ -44,10 +44,12 @@ jobs:
           git clone https://github.com/KnightOS/kernel
       - name: Checkout Patches
         uses: actions/checkout@v4
+        with:
+          path: patches-path
       - name: Apply Patches
         working-directory: kernel
         run: |
-          git apply ../patches/*.patch
+          git apply ../patches-path/patches/*.patch
       - name: Build all KOS targets
         working-directory: KnightOS
         run: |
