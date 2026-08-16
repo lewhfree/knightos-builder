@@ -62,15 +62,15 @@ jobs:
           gh release create "$TAG" \
           --title "KnightOS $TAG" \
           --notes "Automated build of KnightOS upstream" \
-          KnightOS/bin/KnightOS-TI73.73u \
-          KnightOS/bin/KnightOS-TI73.rom \
-          KnightOS/bin/KnightOS-TI83p.8xu \
-          KnightOS/bin/KnightOS-TI83p.rom \
-          KnightOS/bin/KnightOS-TI83pSE.8xu \
-          KnightOS/bin/KnightOS-TI83pSE.rom \
-          KnightOS/bin/KnightOS-TI84p.8xu \
-          KnightOS/bin/KnightOS-TI84p.rom \
-          KnightOS/bin/KnightOS-TI84pCSE.8cu \
-          KnightOS/bin/KnightOS-TI84pCSE.rom \
-          KnightOS/bin/KnightOS-TI84pSE.8xu \
-          KnightOS/bin/KnightOS-TI84pSE.rom 
+          bin/KnightOS-TI73.73u \
+          bin/KnightOS-TI73.rom \
+          bin/KnightOS-TI83p.8xu \
+          bin/KnightOS-TI83p.rom \
+          bin/KnightOS-TI83pSE.8xu \
+          bin/KnightOS-TI83pSE.rom \
+          bin/KnightOS-TI84p.8xu \
+          bin/KnightOS-TI84p.rom \
+          bin/KnightOS-TI84pCSE.8cu \
+          bin/KnightOS-TI84pCSE.rom \
+          bin/KnightOS-TI84pSE.8xu \
+          bin/KnightOS-TI84pSE.rom 
