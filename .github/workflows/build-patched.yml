@@ -41,7 +41,7 @@ jobs:
           git clone https://github.com/KnightOS/KnightOS
       - name: Clone Kernel
         run: |
-          git clone https://github.com/lewhfree/kernel
+          git clone https://github.com/KnightOS/kernel
       - name: Checkout Patches
         uses: actions/checkout@v4
       - name: Apply Patches
