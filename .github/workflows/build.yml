@@ -54,6 +54,7 @@ jobs:
           knightos init --platform=TI84pCSE
           make upgrade
       - name: Publish Release
+        working-directory: KnightOS
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
