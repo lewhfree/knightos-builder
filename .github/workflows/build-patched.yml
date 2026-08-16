@@ -1,0 +1,87 @@
+name: KnightOS-patched Builder
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+          build-essential \
+          cmake \
+          libboost-all-dev \
+          mono-devel \
+          bison \
+          flex \
+          asciidoc \
+          git \
+          python3 \
+          python-is-python3 \
+          python3-pip \
+          python3-docopt \
+          python3-requests \
+          python3-pystache \
+          python3-yaml \
+          scdoc \
+          libreadline-dev
+      - name: Install SDK
+        run: |
+          git clone https://github.com/lewhfree/knightos-install-sdk-script sdk
+          cd sdk
+          ./install-sdk
+      - name: Clone KnightOS
+        run: |
+          git clone https://github.com/KnightOS/KnightOS
+      - name: Clone Kernel
+        run: |
+          git clone https://github.com/lewhfree/kernel
+      - name: Checkout Patches
+        uses: actions/checkout@v4
+      - name: Apply Patches
+        working-dir: kernel
+        run: |
+          git apply ../patches/*.patch
+      - name: Build all KOS targets
+        working-directory: KnightOS
+        run: |
+          knightos init --platform=TI73 --kernel-source=../kernel/
+          make upgrade
+          knightos init --platform=TI83p --kernel-source=../kernel/
+          make upgrade
+          knightos init --platform=TI83pSE --kernel-source=../kernel/
+          make upgrade
+          knightos init --platform=TI84p --kernel-source=../kernel/
+          make upgrade
+          knightos init --platform=TI84pSE --kernel-source=../kernel/
+          make upgrade
+          knightos init --platform=TI84pCSE --kernel-source=../kernel/
+          make upgrade
+      - name: Publish Release
+        working-directory: KnightOS
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="lewhfree-patched-$(date -u +'%Y%m%d-%H%M%S')"
+          git remote set-url origin https://github.com/lewhfree/knightos-builder.git
+          gh release create "$TAG" \
+          --title "KnightOS patched $TAG" \
+          --notes "Upstream but patches applied from this repo" \
+          bin/KnightOS-TI73.73u \
+          bin/KnightOS-TI73.rom \
+          bin/KnightOS-TI83p.8xu \
+          bin/KnightOS-TI83p.rom \
+          bin/KnightOS-TI83pSE.8xu \
+          bin/KnightOS-TI83pSE.rom \
+          bin/KnightOS-TI84p.8xu \
+          bin/KnightOS-TI84p.rom \
+          bin/KnightOS-TI84pCSE.8cu \
+          bin/KnightOS-TI84pCSE.rom \
+          bin/KnightOS-TI84pSE.8xu \
+          bin/KnightOS-TI84pSE.rom 

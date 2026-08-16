@@ -1,0 +1,49 @@
+diff --git a/src/00/display.asm b/src/00/display.asm
+index 88e867e..7af5f41 100644
+--- a/src/00/display.asm
++++ b/src/00/display.asm
+@@ -87,22 +87,19 @@ fastCopy_skipCheck:
+                 ld c, PORT_LCD_CMD
+                 ld a, LCD_CMD_SETROW
+ .setRow:
+-                in f, (c)
+-                jp m, .setRow
++                call lcdDelay
+                 out (PORT_LCD_CMD), a
+                 ld de, 12
+                 ld a, LCD_CMD_SETCOLUMN
+ .col:
+-                in f, (c)
+-                jp m, .col
++                call lcdDelay
+                 out (PORT_LCD_CMD),a
+                 push af
+                     ld b,64
+ .row:
+                     ld a, (hl)
+ .rowWait:
+-                    in f, (c)
+-                    jp m, .rowWait
++                    call lcdDelay
+                     out (PORT_LCD_DATA), a
+                     add hl, de
+                     djnz .row
+diff --git a/src/00/util.asm b/src/00/util.asm
+index 85039fb..8ca0ba7 100644
+--- a/src/00/util.asm
++++ b/src/00/util.asm
+@@ -166,9 +166,11 @@ _:  sub '0' ; To number
+ ;;  Blocks until the LCD is ready to receive data.
+ lcdDelay:
+     push af
+-_:  in a, (PORT_LCD_CMD)
+-    rla
+-    jr c,-_
++    push bc
++        ld b, 12
++.delay:
++        djnz .delay
++    pop bc
+     pop af
+     ret
+ 
