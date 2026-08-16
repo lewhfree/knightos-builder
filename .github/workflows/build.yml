@@ -28,7 +28,8 @@ jobs:
           python3-requests \
           python3-pystache \
           python3-yaml \
-          scdoc
+          scdoc \
+          libreadline-dev
       - name: Install SDK
         run: |
           git clone https://github.com/lewhfree/knightos-install-sdk-script sdk
