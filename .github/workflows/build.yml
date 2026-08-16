@@ -52,20 +52,23 @@ jobs:
           make upgrade
           knightos init --platform=TI84pCSE
           make upgrade
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: KnightOS builds
-          path: |
-            KnightOS/bin/KnightOS-TI73.73u
-            KnightOS/bin/KnightOS-TI73.rom
-            KnightOS/bin/KnightOS-TI83p.8xu
-            KnightOS/bin/KnightOS-TI83p.rom
-            KnightOS/bin/KnightOS-TI83pSE.8xu
-            KnightOS/bin/KnightOS-TI83pSE.rom
-            KnightOS/bin/KnightOS-TI84p.8xu
-            KnightOS/bin/KnightOS-TI84p.rom
-            KnightOS/bin/KnightOS-TI84pCSE.8cu
-            KnightOS/bin/KnightOS-TI84pCSE.rom
-            KnightOS/bin/KnightOS-TI84pSE.8xu
-            KnightOS/bin/KnightOS-TI84pSE.rom
+      - name: Publish Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="$(date -u +'%Y%m%d-%H%M%S')"
+          gh release create "$TAG" \
+          --title "KnightOS $TAG" \
+          --notes "Automated build of KnightOS upstream" \
+          KnightOS/bin/KnightOS-TI73.73u \
+          KnightOS/bin/KnightOS-TI73.rom \
+          KnightOS/bin/KnightOS-TI83p.8xu \
+          KnightOS/bin/KnightOS-TI83p.rom \
+          KnightOS/bin/KnightOS-TI83pSE.8xu \
+          KnightOS/bin/KnightOS-TI83pSE.rom \
+          KnightOS/bin/KnightOS-TI84p.8xu \
+          KnightOS/bin/KnightOS-TI84p.rom \
+          KnightOS/bin/KnightOS-TI84pCSE.8cu \
+          KnightOS/bin/KnightOS-TI84pCSE.rom \
+          KnightOS/bin/KnightOS-TI84pSE.8xu \
+          KnightOS/bin/KnightOS-TI84pSE.rom 
