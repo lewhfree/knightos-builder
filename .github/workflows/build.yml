@@ -1,0 +1,27 @@
+name: KnightOS builder
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install SDK
+        run: |
+          git clone https://github.com/lewhfree/knightos-install-sdk-script sdk
+          cd sdk
+          ./install-sdk
+      - name: Clone KnightOS
+        run: |
+          git clone https://github.com/KnightOS/KnightOS
+      - name: Init KOS
+        working-directory: KnightOS
+        run: |
+          knightos init
+      - name: Build
+        working-directory: KnightOS
+        run: |
+          make upgrade
