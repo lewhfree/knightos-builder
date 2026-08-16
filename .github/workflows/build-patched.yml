@@ -53,18 +53,25 @@ jobs:
       - name: Build all KOS targets
         working-directory: KnightOS
         run: |
+          rm -rf ../kernel/bin
           knightos init --platform=TI73 --kernel-source=../kernel/
-          make upgrade
+          make -B upgrade
+          rm -rf ../kernel/bin
           knightos init --platform=TI83p --kernel-source=../kernel/
-          make upgrade
+          make -B upgrade
+          rm -rf ../kernel/bin
           knightos init --platform=TI83pSE --kernel-source=../kernel/
-          make upgrade
+          make -B upgrade
+          rm -rf ../kernel/bin
           knightos init --platform=TI84p --kernel-source=../kernel/
-          make upgrade
+          make -B upgrade
+          rm -rf ../kernel/bin
           knightos init --platform=TI84pSE --kernel-source=../kernel/
-          make upgrade
+          make -B upgrade
+          rm -rf ../kernel/bin
           knightos init --platform=TI84pCSE --kernel-source=../kernel/
-          make upgrade
+          make -B upgrade
+          rm -rf ../kernel/bin
       - name: Publish Release
         working-directory: KnightOS
         env:
