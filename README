@@ -1,0 +1,13 @@
+KnightOS Builder
+================
+
+Builds both upstream knightos and knightos with my own patches.
+Was made because the srchut official builds don't work anymore and I wanted up to date knightos.
+
+Patches
+=======
+0001 - Fixes LCD on modern lcd controllers. DCS had the same issue, where lcd contents get scrambled because of a hardware update that TI released. It is enough change to not be seen in menus and apps and stuff but it does mess with the pheonix game's graphics. This can be optimized in the future. Old calculators can use the vanilla upstream builds but newer calculators need the patched version.
+
+License
+=======
+Everything in this repo is under the BSD-0 license. That means you can do anything. See LICENSE for more.
